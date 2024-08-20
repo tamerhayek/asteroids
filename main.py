@@ -1,6 +1,7 @@
 # this allows us to use code from
 # the open-source pygame library
 # throughout this file
+import sys
 import pygame
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
@@ -34,10 +35,16 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
+
+		screen.fill("black")
+
 		for obj in updatable:
 			obj.update(dt)
 
-		screen.fill("black")
+		for obj in asteroids:
+			if obj.check_collision(player):
+				print("Game over!")
+				sys.exit()
 
 		for obj in drawable:
 			obj.draw(screen)
